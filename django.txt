@@ -1,0 +1,166 @@
+							Front-end
+1. HTML
+2. CSS
+							HTML
+HTML(Hyper text markup language) is standard language to create or structure the content on a webage, using Tags.
+
+							Tags
+Tags are special words written inside <>
+
+2 types of Tags
+1. Paired tags-opening and closing tags
+		1. heading tags (h1,h2,h3,h4,h5)
+		2. paragraph (p)
+2. Unpaired tags-Self closing tags
+
+						Attributes
+
+Attributes are additional Information about the tags or given to tags.
+1. Image tag example:
+	 <img src="https://quantumzeitgeist.com/wp-content/uploads/pythonai.jpeg" height="200px" width="200px">
+
+2. Creating A link using Anchor Tag:
+	<a href="http://www.instagram.com">Visit Instagram</a>
+	<a href="http://www.zomato.com">Go to Zomato</a>
+	
+	
+						HTML FORMS
+Form is used to collect data from Users or UI
+
+	 <center><h1>User Form</h1></center>
+  <center>
+      <form>
+      <input type="text" placeholder="Enter username"> <br>
+      <input type="password" placeholder="Enter password"> <br>
+      <input type="email" placeholder="Enter email"> <br>
+      <input type="text" placeholder="Enter address"> <br>
+      <button>Add</button>
+    </form>
+  </center>
+  
+						CSS
+CSS stands for Cascading Style Sheets
+CSS describes how HTML elements are to be displayed on screen
+
+Applying styles:
+1. Inline styles:
+	<h1 style="color: red;background-color: yellow;">Hello students</h1>
+2. Internal Styles
+	<head>
+		<style>
+    h1{
+      color: red;
+      background-color: green;
+    }
+  </style>
+	</head>
+	<body>
+		<h1>Welcome</h1>
+	</body>
+						Flex
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div{
+      background-color: yellow;
+      height: 200px;
+      width: 600px;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+  </style>
+  
+</head>
+<body>
+    <div>
+      <h1>Hello</h1>
+      <h1>Welcome</h1>
+    </div>
+</body>
+</html>
+
+								Django
+
+Django is a open-source, free, a powerful web framework written in python for building a secure, faster and scalable websites easily.
+
+Django was developed by Adrian holovaty and Simon willison in 2003 and they made open-source in 2005
+
+Installation:
+1. Create a virtual environment
+	>>python -m venv test
+	>>test\scripts\activate
+2. Install Django
+	>>pip install django
+3. Creating Project
+	>>django-admin startproject firstproject
+	>>cd firstproject
+4. Create Applications
+	>>python manage.py startapp userapp
+	>>code .
+	
+5. Run server:
+	>>python manage.py runserver
+	
+	
+	
+	Creation of Model:models.py
+		from django.db import models
+
+		class User(models.Model):
+		  name = models.CharField(max_length=200)
+		  age = models.IntegerField()
+		  email = models.EmailField()
+		  
+		  >>python manage.py makemigrations
+		  >>python manage.py migrate
+		  
+	Creation of Admin:
+		>>python manage.py createsuperuser
+			->username
+			->email(skip)
+			->password
+			->retype password
+			
+	
+	Writing Logics:views.py
+		from django.shortcuts import render
+		from userapp.models import User
+
+		def fetchdata(request):
+		  a = User.objects.all()
+		  return render(request,"index.html",{"a":a})
+		  
+	Displaying Data:templates/index.html
+			<!DOCTYPE html>
+			<html lang="en">
+			<head>
+			  <meta charset="UTF-8">
+			  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			  <title>Document</title>
+			</head>
+			<body>
+			  <center><h1>Users</h1></center>
+			  {% for i in a %}
+				<h1>Name: {{i.name}}</h1>
+				<h1>Age: {{i.age}}</h1>
+				<h1>Email: {{i.email}}</h1> <hr>
+			  {% endfor %}
+			</body>
+			</html>
+		  
+			Create URLS:urls.py
+			
+				from django.contrib import admin
+				from django.urls import path
+				from userapp.views import fetchdata
+
+				urlpatterns = [
+					path('admin/', admin.site.urls),
+					path("fetch/",fetchdata)
+				]
